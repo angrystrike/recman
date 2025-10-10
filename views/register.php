@@ -3,8 +3,6 @@
         <div class="col-sm-10">
             <h4 id="form_header" class="mt-3 text-center">Register</h4>
 
-            <section id="errors" class="errors text-center border hidden"></section>
-
             <form id="register_form">
 
                 <div class="form-group">
@@ -60,7 +58,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Password (*): </label> <br>
+                    <label for="password">Password (*): </label> <br>
                     <label><b>Tip</b>: password must contain at least 8 symbols and at least 1 digit and 1 letter</label>
                     <input
                         type="password"
@@ -72,13 +70,8 @@
                         required
                     >
                 </div>
-                <button type="button" id="to_more_info_form" class="btn btn-primary float-right mt-2 mb-2">Submit</button>
+                <button type="button" id="register" class="btn btn-primary float-right mt-2 mb-2">Submit</button>
             </form>
-
-            <section id="social" class="hidden text-center mt-3">
-                <h4 class="mt-2 mb-2">Registration succeed!</h4>
-                <p class="mt-2"><a href="/members" class="text-success h3">All members list (<?= $membersCount + 1 ?>)</a></p>
-            </section>
 
         </div>
     </div>

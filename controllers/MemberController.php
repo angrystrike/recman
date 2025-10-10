@@ -9,47 +9,32 @@ use components\Validator;
 
 class MemberController extends Controller
 {
-    public function actionIndex()
+    public function actionLoginPage()
     {
-        $member = new Member();
-        $members = $member->all();
-
-        $this->render("members", ['members' => $members]);
+        $this->render('login', []);
     }
 
     public function actionRegister()
     {
-        $params = include(ROOT . '/config/params.php');
-        $member = new Member();
-
-        $this->render("register", [
-            'twitterText' => $params['twitter_text'],
-            'twitterUrl' => $params['twitter_url'],
-            'membersCount' => $member->count(),
-        ]);
+        $this->render('register', []);
     }
 
-    public function actionCurrent()
+    public function actionLogin()
     {
+        $data = [];
+        parse_str($_POST['form_data'], $data);
+
         $member = new Member();
-        $currentMember = $member->findOneById($_SESSION['member_id']);
-
-        returnJSON($currentMember);
-    }
-
-    public function actionCount()
-    {
-        $member = new Member();
-        returnJSON($member->count());
-    }
-
-    public function actionIsLogged()
-    {
-        if (empty($_SESSION['member_id'])) {
-            returnJSON("false");
+        if ($member->login($data['email'], $data['password'])) {
+            http_response_code(200);
         } else {
-            returnJSON("true");
+            http_response_code(401);
+            returnJSON([
+                'Incorrect email or password'
+            ]);
         }
+
+        return true;
     }
 
     public function actionCreate()
@@ -74,54 +59,10 @@ class MemberController extends Controller
         $errors = $validator->validate();
 
         if (empty($errors)) {
-            if (empty($_SESSION['member_id'])) {
-                $member = new Member();
-                $newMemberId = $member->create($data);
-                $_SESSION['member_id'] = $newMemberId;
-            } else {
-                $member = new Member();
-                $member->edit($data);
-            }
-            http_response_code(200);
-        } else {
-            http_response_code(422);
-            returnJSON($errors);
-        }
-
-        return true;
-    }
-
-    public function actionUpdate()
-    {
-        $maxLength = [
-            'company' => 45,
-            'position' => 45,
-            'about_me' => 300
-        ];
-        $filter = ['photo' => 'photo'];
-
-        $validator = new Validator($_POST,null, $maxLength, $filter);
-        $errors = $validator->validate();
-
-        if (empty($errors)) {
-            $img = $_FILES["photo"]["name"];
-            $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
-            if (!empty($img)) {
-                $randomName = uniqid() . ".$ext";
-                move_uploaded_file($_FILES['photo']['tmp_name'], 'public/img/' . $randomName);
-            } else {
-                $randomName = 'no-photo.jpeg';
-            }
+            $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
             $member = new Member();
-            $member->update([
-                'company' => $_POST['company'],
-                'position' => $_POST['position'],
-                'about_me' => $_POST['about_me'],
-                'photo_name' => $randomName
-            ]);
-
-            unset ($_SESSION["member_id"]);
+            $member->create($data);
             http_response_code(200);
         } else {
             http_response_code(422);

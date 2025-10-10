@@ -15,6 +15,7 @@
 </head>
 
 <body>
+<section id="errors" class="mx-5 errors text-center border hidden"></section>
 
 <?= $content; ?>
 

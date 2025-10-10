@@ -50,7 +50,8 @@ class Validator
             foreach ($this->filter as $field => $rule) {
 
                 if ($rule == 'email') {
-                    if (Member::isEmailInUse($this->fields[$field])) {
+                    $member = new Member();
+                    if ($member->isEmailInUse($this->fields[$field])) {
                         array_push($this->errors, "Email is already in use");
                     }
                     if (!filter_var($this->fields['email'], FILTER_VALIDATE_EMAIL)) {

@@ -4,6 +4,10 @@ namespace components;
 
 use PDO;
 
+/**
+ * This is a base class for Model
+ * I would add here abstract methods for all models
+ */
 abstract class DB
 {
     protected $db;
@@ -23,9 +27,4 @@ abstract class DB
 
         return $db;
     }
-
-    abstract public function all();
-    abstract public function count();
-    abstract public function findOneById($id);
-
 }

@@ -1,12 +1,9 @@
 <?php
 
-
 namespace core;
-
 
 abstract class Controller
 {
-    public $vars = [];
     public $layout = 'main';
 
     public function render($filename, array $data)
@@ -20,7 +17,7 @@ abstract class Controller
         if ($this->layout == false) {
             echo $content;
         } else {
-            require(ROOT . "/views/" . $this->layout . '.php');
+            require(ROOT . '/views/' . $this->layout . '.php');
         }
 
         return true;
