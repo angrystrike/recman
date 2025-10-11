@@ -15,7 +15,7 @@ class Member extends Model
 
     public function create(array $data)
     {
-        $query = $this->db->prepare(
+        $query = self::$db->prepare(
             "INSERT INTO {$this->table} (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?, ?)"
         );
 
@@ -27,12 +27,12 @@ class Member extends Model
             $data['password'],
         ]);
 
-        return $this->db->lastInsertId();
+        return self::$db->lastInsertId();
     }
 
     public function isEmailInUse($email)
     {
-        $query = $this->db->prepare("SELECT * FROM members WHERE email = ? AND id != ?");
+        $query = self::$db->prepare("SELECT * FROM members WHERE email = ? AND id != ?");
         $id = 0;
 
         $query->execute([$email, $id]);
@@ -42,7 +42,7 @@ class Member extends Model
 
     public function login(string $email, string $password): bool
     {
-        $query = $this->db->prepare("SELECT * FROM {$this->table} WHERE email = ?");
+        $query = self::$db->prepare("SELECT * FROM {$this->table} WHERE email = ?");
         $query->execute([$email]);
         $user = $query->fetch(\PDO::FETCH_ASSOC);
 

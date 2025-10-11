@@ -10,21 +10,22 @@ use PDO;
  */
 abstract class DB
 {
-    protected $db;
+    protected static $db;
     protected $table;
 
     public function __construct()
     {
-        $this->db = self::getConnection();
+        // I avoid creating separate connections for each call
+        if (self::$db === null) {
+            self::$db = self::getConnection();
+        }
     }
 
     public static function getConnection()
     {
         $params = include(ROOT . '/config/params.php');
-
         $connectionString = "mysql:host={$params['host']};dbname={$params['dbname']}";
-        $db = new PDO($connectionString, $params['user'], $params['password']);
 
-        return $db;
+        return new PDO($connectionString, $params['user'], $params['password']);
     }
 }
