@@ -2,6 +2,10 @@
 
 namespace components;
 
+/**
+ * Routing class that connects FE request with the actual Controller method
+ * Controller filenames and method names should follow specific pattern
+ */
 class Router
 {
     private $routes;

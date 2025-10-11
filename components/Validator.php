@@ -4,6 +4,9 @@ namespace components;
 
 use models\Member;
 
+/**
+ * Simple validator class to avoid writing validation directly in Controller
+ */
 class Validator
 {
     private $fields;

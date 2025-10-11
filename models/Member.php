@@ -4,6 +4,10 @@ namespace models;
 
 use core\Model;
 
+/**
+ * I decided not to overcomplicate things and just went with simple Model due to time constraints
+ * Ideally, we should use DTO + Data Mapper
+ */
 class Member extends Model
 {
     public $table = 'members';

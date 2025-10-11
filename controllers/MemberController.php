@@ -18,6 +18,11 @@ class MemberController extends Controller
         $this->render('register', []);
     }
 
+    /*
+     * Currently I am just checking if credentials are correct
+     * Obviously we also need some proper auth system like JWT
+     * But I kept it simple due to lack of time
+     * */
     public function actionLogin()
     {
         $data = [];
@@ -57,6 +62,7 @@ class MemberController extends Controller
         $errors = $validator->validate();
 
         if (empty($errors)) {
+            // Since I am not hashing password on the client, HTTPS is required in this case
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
             $member = new Member();
