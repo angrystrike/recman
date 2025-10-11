@@ -9,13 +9,13 @@ use models\Member;
  */
 class Validator
 {
-    private $fields;
-    private $required;
-    private $maxLength;
-    private $filter;
-    private $errors = [];
+    private array $fields;
+    private array $required;
+    private array $maxLength;
+    private array $filter;
+    private array $errors = [];
 
-    public function __construct($fields, $required, $maxLength, $filter)
+    public function __construct(array $fields, array $required, array $maxLength, array $filter)
     {
         $this->fields = $fields;
         $this->required = $required;
@@ -23,7 +23,7 @@ class Validator
         $this->filter = $filter;
     }
 
-    private function checkRequired()
+    private function checkRequired(): void
     {
         if (!empty($this->required)) {
             foreach ($this->required as $field) {
@@ -35,7 +35,7 @@ class Validator
         }
     }
 
-    private function checkMaxLength()
+    private function checkMaxLength(): void
     {
         if (!empty($this->maxLength)) {
             foreach ($this->maxLength as $field => $maxLength) {
@@ -47,7 +47,7 @@ class Validator
         }
     }
 
-    private function checkFilter()
+    private function checkFilter(): void
     {
         if (!empty($this->filter)) {
             foreach ($this->filter as $field => $rule) {
@@ -82,7 +82,7 @@ class Validator
         }
     }
 
-    public function validate()
+    public function validate(): array
     {
         self::checkRequired();
         self::checkMaxLength();

@@ -4,9 +4,9 @@ namespace core;
 
 abstract class Controller
 {
-    public $layout = 'main';
+    public string|false $layout = 'main';
 
-    public function render($filename, array $data)
+    public function render(string $filename, array $data): bool
     {
         ob_start();
         extract($data);
@@ -23,7 +23,7 @@ abstract class Controller
         return true;
     }
 
-    public function returnJSON($data, $http_code = null)
+    public function returnJSON(mixed $data, ?int $http_code = null): bool
     {
         header('Content-type: application/json;');
         echo json_encode($data);

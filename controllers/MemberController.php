@@ -8,12 +8,12 @@ use components\Validator;
 
 class MemberController extends Controller
 {
-    public function actionLoginPage()
+    public function actionLoginPage(): void
     {
         $this->render('login', []);
     }
 
-    public function actionRegister()
+    public function actionRegister(): void
     {
         $this->render('register', []);
     }
@@ -23,7 +23,7 @@ class MemberController extends Controller
      * Obviously we also need some proper auth system like JWT
      * But I kept it simple due to lack of time
      * */
-    public function actionLogin()
+    public function actionLogin(): bool
     {
         $data = [];
         parse_str($_POST['form_data'], $data);
@@ -40,7 +40,7 @@ class MemberController extends Controller
         return true;
     }
 
-    public function actionCreate()
+    public function actionCreate(): bool
     {
         $data = [];
         parse_str($_POST['form_data'], $data);

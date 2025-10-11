@@ -8,7 +8,7 @@ namespace components;
  */
 class Router
 {
-    private $routes;
+    private array $routes;
 
     public function __construct()
     {
@@ -16,14 +16,16 @@ class Router
         $this->routes = include($routesPath);
     }
 
-    private function getURI()
+    private function getURI(): ?string
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
             return trim($_SERVER['REQUEST_URI'], '/');
         }
+
+        return null;
     }
 
-    public function run()
+    public function run(): void
     {
         $uri = $this->getURI();
         foreach ($this->routes as $uriPattern => $path) {
@@ -33,7 +35,7 @@ class Router
                 $controllerName = 'controllers\\' . ucfirst(array_shift($segments) . 'Controller');
                 $actionName = 'action' . ucfirst(array_shift($segments));
 
-                $controllerObject = new $controllerName;
+                $controllerObject = new $controllerName();
                 $result = $controllerObject->$actionName();
                 if ($result != null) {
                     break;

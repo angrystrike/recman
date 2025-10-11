@@ -10,14 +10,14 @@ use core\Model;
  */
 class Member extends Model
 {
-    public $table = 'members';
+    protected string $table = 'members';
 
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function create(array $data)
+    public function create(array $data): string
     {
         $query = self::$db->prepare(
             "INSERT INTO {$this->table} (first_name, last_name, phone, email, password) VALUES (?, ?, ?, ?, ?)"
@@ -34,7 +34,7 @@ class Member extends Model
         return self::$db->lastInsertId();
     }
 
-    public function isEmailInUse($email)
+    public function isEmailInUse(string $email): bool
     {
         $query = self::$db->prepare("SELECT * FROM members WHERE email = ? AND id != ?");
         $id = 0;
