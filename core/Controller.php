@@ -22,4 +22,15 @@ abstract class Controller
 
         return true;
     }
+
+    public function returnJSON($data, $http_code = null)
+    {
+        header('Content-type: application/json;');
+        echo json_encode($data);
+
+        if ($http_code) {
+            http_response_code($http_code);
+        }
+        return true;
+    }
 }

@@ -2,7 +2,6 @@
 
 namespace controllers;
 
-require_once ROOT . '/utility/response.php';
 use core\Controller;
 use models\Member;
 use components\Validator;
@@ -28,10 +27,9 @@ class MemberController extends Controller
         if ($member->login($data['email'], $data['password'])) {
             http_response_code(200);
         } else {
-            http_response_code(401);
-            returnJSON([
+            $this->returnJSON([
                 'Incorrect email or password'
-            ]);
+            ], 401);
         }
 
         return true;
@@ -65,8 +63,7 @@ class MemberController extends Controller
             $member->create($data);
             http_response_code(200);
         } else {
-            http_response_code(422);
-            returnJSON($errors);
+            $this->returnJSON($errors, 422);
         }
 
         return true;
