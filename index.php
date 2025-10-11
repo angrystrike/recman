@@ -8,7 +8,11 @@ error_reporting(E_ALL);
 session_start();
 
 define('ROOT', $_SERVER['DOCUMENT_ROOT']);
-require_once(ROOT . '/components/Autoload.php');
+require_once ROOT . '/components/Autoloader.php';
+
+use components\Autoloader;
+
+Autoloader::register();
 
 $router = new Router();
 $router->run();
