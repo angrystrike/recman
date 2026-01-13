@@ -1,6 +1,6 @@
-# Simple PHP Registration & Login Project
+# Custom Framework project
 
-This is a minimal PHP project with user registration and login. No need for frameworks, Docker or package managers.
+This is a minimal PHP project with user registration and login to showcase the custom framework abilities. No need for frameworks, Docker or package managers.
 
 ---
 
